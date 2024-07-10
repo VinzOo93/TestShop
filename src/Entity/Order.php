@@ -16,29 +16,30 @@ class Order
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $deliveryStreet;
+    private string $deliveryStreet;
     /**
      * @ORM\Column(type="string")
      */
-    private $deliveryZipcode;
+    private string $deliveryZipcode;
     /**
      * @ORM\Column(type="string")
      */
-    private $deliveryCity;
+    private string $deliveryCity;
+
     /**
      * @ORM\Column(type="string")
      */
-    private $cart;
+    private string $cart;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $price;
+    private float $price;
 
     /**
      * Order constructor.
@@ -59,7 +60,7 @@ class Order
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -99,7 +100,7 @@ class Order
     /**
      * @return mixed
      */
-    public function getPrice()
+    public function getPrice(): float
     {
         return $this->price;
     }

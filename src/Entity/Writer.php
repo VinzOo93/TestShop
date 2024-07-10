@@ -13,5 +13,5 @@ class Writer extends Individual
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="author")
      */
-    private $books;
+    private  $books;
 }

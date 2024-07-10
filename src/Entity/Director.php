@@ -13,5 +13,5 @@ class Director extends Individual
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Movie", mappedBy="director")
      */
-    private $movies;
+    private  $movies;
 }

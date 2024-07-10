@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @method string getUserIdentifier()
  */
 class User implements PasswordAuthenticatedUserInterface, UserInterface, \Serializable
 {
@@ -17,76 +18,61 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface, \Serial
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=254, unique=true)
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="string", length=64)
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $street;
+    private string $street;
 
     /**
      * @ORM\Column(type="string", length=6)
      */
-    private $zipcode;
+    private string $zipcode;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $city;
+    private string $city;
 
     public function __construct(string $email)
     {
-
+        $this->email = $email;
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->getEmail();
     }
 
-
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getZipcode()
+    public function getZipcode(): string
     {
         return $this->zipcode;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
-    }
-
-    public function getSalt()
-    {
-        return 'unPetitGrainDeSel';
     }
 
     public function getPassword(): ?string
@@ -94,19 +80,25 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface, \Serial
         return $this->password;
     }
 
-    public function getRoles()
+    public function setPassword(string $password): void
     {
-        return array('ROLE_USER');
+        $this->password = $password;
+    }
+
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
     }
 
     public function eraseCredentials()
     {
+        // Si vous stockez des données sensibles temporaires, nettoyez-les ici
     }
 
     /** @see \Serializable::serialize() */
     public function serialize()
     {
-        return \serialize([
+        return serialize([
             $this->id,
             $this->email,
             $this->password,
@@ -120,6 +112,15 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface, \Serial
             $this->id,
             $this->email,
             $this->password,
-            ) = \unserialize($serialized, ['allowed_classes' => false]);
+            ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getSalt(): string
+    {
+        return 'unPetitGrainDeSel';
+    }
+
+    public function __call(string $name, array $arguments)
+    {
     }
 }

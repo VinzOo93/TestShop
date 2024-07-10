@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,28 +20,28 @@ abstract class Movie
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=10)
      */
-    private $asin;
+    private string $asin;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private string $title;
 
     /**
      * @var Director
      * @ORM\ManyToOne(targetEntity="Director", inversedBy="movies")
      */
-    private $director;
+    private Director $director;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|Actor[]
+     * @var Collection|Actor[]
      * @ORM\ManyToMany(targetEntity="Actor", cascade={"persist"}, fetch="EAGER")
      */
     private $cast;
@@ -49,25 +50,25 @@ abstract class Movie
      * @var \DateTimeInterface
      * @ORM\Column(type="date")
      */
-    private $releaseDate;
+    private \DateTimeInterface $releaseDate;
 
     /**
      * @var integer
      * @ORM\Column(type="integer")
      */
-    private $duration;
+    private int $duration;
 
     /**
      * @var string
      * @ORM\Column(type="text")
      */
-    private $summary;
+    private string $summary;
 
     /**
      * @var float
      * @ORM\Column(type="float")
      */
-    private $price;
+    private float $price;
 
     /**
      * Movie constructor.
@@ -93,9 +94,9 @@ abstract class Movie
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -125,7 +126,7 @@ abstract class Movie
     }
 
     /**
-     * @return Actor[]|\Doctrine\Common\Collections\Collection
+     * @return Actor[]|Collection
      */
     public function getCast()
     {
