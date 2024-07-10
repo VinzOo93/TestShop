@@ -8,29 +8,33 @@ final class VATCalculator
     protected const TVA_RATE = 0.20;
     protected const DECIMAL = 2;
 
-    public static function getPriceArray(float $price): array
+    public function getPriceArray(float $price): array
     {
         $vat = self::calculateVat($price);
         return [
-            'netPrice' => $price,
-            'vat' => $vat,
-            'rawPrice' => self::calculateRawPrice($price, $vat),
+            'netPrice' => $this->formatValue($price),
+            'vat' => $this->formatValue($vat),
+            'rawPrice' => $this->formatValue(self::calculateRawPrice($price, $vat)),
         ];
     }
 
-    private static function calculateVat(float $price): float
+    private function calculateVat(float $price): float
     {
         return self::roundValue($price * self::TVA_RATE / (1 + self::TVA_RATE));
     }
 
-    private static function calculateRawPrice(float $price, float $vat): float
+    private function calculateRawPrice(float $price, float $vat): float
     {
-        return self::roundValue($price - $vat);
+        return $this->roundValue($price - $vat);
     }
 
-    private static function roundValue(float $value): float
+    private  function roundValue(float $value): float
     {
-      return round($value, self::DECIMAL);
+      return $this->formatValue(round($value, self::DECIMAL));
     }
 
+    private function formatValue($value): float
+    {
+        return (float) number_format($value, self::DECIMAL, '.','');
+    }
 }

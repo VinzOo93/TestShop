@@ -18,7 +18,7 @@ class OrderController extends AbstractController
     /**
      * @Route("/commande/initier", name="order_checkout")
      */
-    public function checkout(Request $request, OrderRepository $repository): Response
+    public function checkout(Request $request, OrderRepository $repository, VATCalculator $VATCalculator): Response
     {
         $session = $this->get('session');
         $cart = $session->get('cart', []);
@@ -48,7 +48,7 @@ class OrderController extends AbstractController
 
         return $this->render('order/deliveryform.html.twig', [
             'cart' => $cart,
-            'prices' => VATCalculator::getPriceArray($totalPrice),
+            'prices' => $VATCalculator->getPriceArray($totalPrice),
             'form' => $form->createView()
         ]);
 //
