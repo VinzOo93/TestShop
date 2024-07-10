@@ -92,11 +92,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface, \Serial
 
     public function eraseCredentials()
     {
-        // Si vous stockez des données sensibles temporaires, nettoyez-les ici
     }
 
-    /** @see \Serializable::serialize() */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize([
             $this->id,
@@ -105,8 +103,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface, \Serial
         ]);
     }
 
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
         list (
             $this->id,

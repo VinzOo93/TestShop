@@ -1,25 +1,19 @@
-# Test technique Novaway
 
-## Objectif
+## Retour de Test
 
-Bienvenue sur le test technique Novaway. Le but de ce test est d'évaluer la façon dont vous travaillez sur une base de code PHP Symfony.
+J’ai volontairement choisi de ne pas migrer entièrement la classe User pour ne pas casser l’authentification des utilisateurs existants. Actuellement, dans le projet, vous utilisez un encodage en MD5 pour chiffrer les mots de passe. Symfony utilise nativement un password hasher dans PasswordAuthenticatedUserInterface, qui utilise un algorithme de chiffrement plus sécurisé.
 
-L'idée est de voir comment vous mettez en place les bonnes pratiques de développement.
+La fonction getSalt avec la clé ‘unPetitGrainDeSel’ permet de trouver facilement comment rendre visibles les mots de passe.
 
-Ce projet est un mini site pseudo e-commerce, avec une base de code contenant des erreurs et/ou des choses à améliorer.
+Je propose comme solution d’évolution de migrer les données existantes avec une commande Symfony qui reprendra une à une chaque donnée des utilisateurs dans le but de migrer le mot de passe vers la nouvelle norme. La commande se chargera de reprendre l’ancien mot de passe, de le déchiffrer avec MD5/getSalt, puis de le rechiffrer avec le nouveau passwordHasher et de l’enregistrer en BDD.
 
-Certaines seront volontaires et parfois évidentes, le chemin n'est pas déjà tracé, libre à vous de faire les modifications qui vous semblent nécessaires.
+Ainsi, nous serons certains que tous les mots de passe seront migrés et nous éviterons les potentielles failles de sécurité.
 
 ## Setup
 
 Prérequis
 PHP 8.0 minimum
 
-Clonez le projet et lancez le serveur PHP standalone
-```
-git clone https://gitlab.novaway.net/dev-team/test-recrutement
-cd test-novaway
-composer install
 npm i
 ./node_modules/.bin/encore dev
 php -S 127.0.0.1:8000 -t public
