@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Helper\VATCalculator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -121,7 +122,7 @@ class Book
      */
     public function getPrice(): float
     {
-        return $this->price;
+        return VATCalculator::formatValue($this->price);
     }
 
     /**

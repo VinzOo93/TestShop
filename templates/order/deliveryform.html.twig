@@ -23,7 +23,7 @@
                 </th>
             {% endif %}
             <td>
-                {{ item.item.price * item.qty }} €
+                {{ (item.item.price * item.qty)|number_format(2) }} €
             </td>
         </tr>
     {% endfor %}

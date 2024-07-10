@@ -5,8 +5,8 @@ namespace App\Helper;
 
 final class VATCalculator
 {
-    protected const TVA_RATE = 0.20;
-    protected const DECIMAL = 2;
+    public const TVA_RATE = 0.20;
+    public const DECIMAL = 2;
 
     public function getPriceArray(float $price): array
     {
@@ -16,6 +16,10 @@ final class VATCalculator
             'vat' => $this->formatValue($vat),
             'rawPrice' => $this->formatValue(self::calculateRawPrice($price, $vat)),
         ];
+    }
+    public static function formatValue($value): float
+    {
+        return (float) number_format($value, self::DECIMAL, '.','');
     }
 
     private function calculateVat(float $price): float
@@ -33,8 +37,5 @@ final class VATCalculator
       return $this->formatValue(round($value, self::DECIMAL));
     }
 
-    private function formatValue($value): float
-    {
-        return (float) number_format($value, self::DECIMAL, '.','');
-    }
+
 }

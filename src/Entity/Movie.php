@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Helper\VATCalculator;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -139,7 +139,7 @@ abstract class Movie
      */
     public function getPrice(): float
     {
-        return $this->price;
+        return VATCalculator::formatValue($this->price);
     }
 
     /**
