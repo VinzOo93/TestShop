@@ -41,10 +41,10 @@ abstract class Movie
     private Director $director;
 
     /**
-     * @var Collection|Actor[]
+     * @var Actor[]|Collection
      * @ORM\ManyToMany(targetEntity="Actor", cascade={"persist"}, fetch="EAGER")
      */
-    private $cast;
+    private array|Collection $cast;
 
     /**
      * @var \DateTimeInterface
@@ -69,29 +69,6 @@ abstract class Movie
      * @ORM\Column(type="float")
      */
     private float $price;
-
-    /**
-     * Movie constructor.
-     * @param $id
-     * @param string $asin
-     * @param string $title
-     * @param \DateTimeInterface $releaseDate
-     * @param int $duration
-     * @param string $summary
-     * @param float $price
-     * @param array $cast
-     */
-    public function __construct($id, string $asin, string $title, \DateTimeInterface $releaseDate, int $duration, string $summary, float $price, array $cast)
-    {
-        $this->id = $id;
-        $this->asin = $asin;
-        $this->title = $title;
-        $this->releaseDate = $releaseDate;
-        $this->duration = $duration;
-        $this->summary = $summary;
-        $this->price = $price;
-        $this->cast = new ArrayCollection($cast);
-    }
 
     /**
      * @return int
