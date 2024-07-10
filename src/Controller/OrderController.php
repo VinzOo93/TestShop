@@ -20,7 +20,7 @@ class OrderController extends AbstractController
      */
     public function checkout(Request $request, OrderRepository $repository, VATCalculator $VATCalculator): Response
     {
-        $session = $this->get('session');
+        $session = $request->getSession();
         $cart = $session->get('cart', []);
 
         $totalPrice = array_sum(array_map(function ($item) {

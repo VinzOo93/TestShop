@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -34,9 +35,9 @@ class BookController extends AbstractController
     /**
      * @Route("/livre/{id}/ajouter-au-panier", name="book_add_to_cart")
      */
-    public function addToCart(Book $book): Response
+    public function addToCart(Book $book, RequestStack $requestStack): Response
     {
-        $session = $this->get('session');
+        $session = $requestStack->getSession();
 
         $cart = $session->get('cart', []);
         $cart[$book->getIsnb()] = [ 'item' => $book , 'qty' => ($cart[$book->getIsnb()]['qty'] ?? 0) + 1 ];
